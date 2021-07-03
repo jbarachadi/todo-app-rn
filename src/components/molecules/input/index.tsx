@@ -27,7 +27,8 @@ export const Input = () => {
 const Styles = StyleSheet.create({
     inputField: {
         height: 50,
-        paddingHorizontal: 24,
+        paddingRight: 54,
+        paddingLeft: 16,
         marginHorizontal: 12,
         marginTop: 18,
         marginBottom: 12,

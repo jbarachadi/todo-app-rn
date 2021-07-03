@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 
 import { useDispatch } from "react-redux";
-import { addItem } from "actions";
+import { addItem, inputText } from "actions";
 
 import { PRIMARY, WHITE } from "styles";
 
@@ -16,7 +16,7 @@ export const InputButton = ({ input }: IInputButtonComponent) => {
     return (
         <TouchableOpacity
             style={Styles.inputButton}
-            onPress={() => dispatch(addItem(input))}
+            onPress={() => {dispatch(addItem(input)); dispatch(inputText(""));}}
         >
             <Text style={Styles.inputButtonText}>Add</Text>
         </TouchableOpacity>

@@ -1,10 +1,10 @@
-import { todo, todos } from "assets";
+import { todo } from "assets";
 
-export const itemsReducer = (items: Array<todo> = todos, action: any) => {
+export const itemsReducer = (items: Array<todo> = [], action: any) => {
     switch (action.type) {
         case "ADD":
             let newItem: todo = {
-                id: items[items.length - 1].id + 1,
+                id: items.length - 1 < 0 ? 0 : items[items.length - 1].id + 1,
                 text: action.text,
                 status: false,
             };

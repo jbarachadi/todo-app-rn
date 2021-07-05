@@ -18,7 +18,9 @@ export const List = ({ status }: IListComponent) => {
 
     useEffect(() => {
         getData().then((e) => {
-            dispatch(initAdd(e));
+            if (e != undefined) {
+                dispatch(initAdd(e));
+            }
         });
     }, []);
 

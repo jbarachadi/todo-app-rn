@@ -1,6 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import { todo } from "assets";
+
+import { getData, storeData } from "services";
 
 var initialState: todo[] = [];
 
@@ -65,23 +65,5 @@ export const itemsReducer = (
             return items;
         default:
             return items;
-    }
-};
-
-export const storeData = async (value: any) => {
-    try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem("todos", jsonValue);
-    } catch (e) {
-        console.log(e);
-    }
-};
-
-export const getData = async () => {
-    try {
-        const jsonValue = await AsyncStorage.getItem("todos");
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-        console.log(e);
     }
 };

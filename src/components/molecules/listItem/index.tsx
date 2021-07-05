@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { changeStatus, editItem } from "actions";
+import { changeStatus, editItem, refreshList } from "actions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCheckCircle, faCircle } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +16,7 @@ import {
 import { PRIMARY } from "styles";
 
 import { todo } from "assets";
+import { getData } from "reducers/items";
 
 export interface IListItemProps {
     elem: todo;
@@ -30,10 +31,12 @@ export const ListItem = ({ elem }: IListItemProps) => {
         }
     });
 
-    const completed: boolean = useSelector((s: any) => {
-        return s.items[
-            s.items.indexOf(s.items.find((e: todo) => e.id === elem.id))
-        ]?.status;
+    const [completed, setCompleted] = useState(false);
+
+    useEffect(() => {
+        getData().then((e) => {
+            setCompleted(e.find((x: todo) => x.id === elem.id).status);
+        });
     });
 
     const dispatch = useDispatch();
@@ -57,7 +60,7 @@ export const ListItem = ({ elem }: IListItemProps) => {
             {edit && !completed ? (
                 <EditInput id={elem.id} holder={elem.text} />
             ) : (
-                <ListText text={elem.text} status={elem.status} />
+                <ListText text={elem.text} status={completed} />
             )}
             {completed ? <></> : <EditButton id={elem.id} />}
             <DeleteButton id={elem.id} />

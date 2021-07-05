@@ -20,7 +20,9 @@ export const DeleteButton = ({ id }: IDeleteButtonComponent) => {
         <TouchableOpacity
             style={Styles.deleteButton}
             activeOpacity={0.8}
-            onPress={() => dispatch(deleteItem(id))}
+            onPress={() => {
+                dispatch(deleteItem(id));
+            }}
         >
             <FontAwesomeIcon size={24} icon={faTrashAlt} color={PRIMARY} />
         </TouchableOpacity>

@@ -67,10 +67,6 @@ export const itemsReducer = (
 
             return items;
         case "COMPLETED":
-            /* items[
-                items.indexOf(items.find((e) => e.id === action.id)!)
-            ].status = !items.find((e) => e.id === action.id)?.status; */
-
             getData().then((e) => {
                 e.find((elem: todo) => elem.id === action.id).status = !e.find(
                     (elem: todo) => elem.id === action.id
@@ -81,16 +77,35 @@ export const itemsReducer = (
 
             return items;
         case "EDIT_INPUT":
-            items[items.indexOf(items.find((e) => e.id === action.id)!)].text =
-                action.text;
+            /* items[items.indexOf(items.find((e) => e.id === action.id)!)].text =
+                action.text; */
+
+            getData().then((e) => {
+                e.find((elem: todo) => elem.id === action.id).status =
+                    action.text;
+
+                storeData(e);
+            });
 
             return items;
         case "DELETE":
-            items = items.filter((e) => e.id !== action.id);
+            //items = items.filter((e) => e.id !== action.id);
+
+            getData().then((e) => {
+                e = e.filter((elem: todo) => elem.id !== action.id);
+
+                storeData(e);
+            });
 
             return items;
         case "CLEAR":
-            items = items.filter((e) => e.status === false);
+            //items = items.filter((e) => e.status === false);
+
+            getData().then((e) => {
+                e = e.filter((elem: todo) => elem.status === false);
+
+                storeData(e);
+            });
 
             return items;
         default:

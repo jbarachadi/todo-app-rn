@@ -5,6 +5,6 @@ export const refreshReducer = (refresh: boolean = initialState, action: any) => 
         case "REFRESH":
             return !refresh;
         default:
-            return !refresh;
+            return refresh;
     }
 };

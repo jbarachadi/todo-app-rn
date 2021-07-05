@@ -50,6 +50,7 @@ export const ListItem = ({ elem }: IListItemProps) => {
                 if (edit) {
                     dispatch(editItem(elem.id));
                 }
+                dispatch(refreshList());
             }}
         >
             <FontAwesomeIcon

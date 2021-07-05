@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { useDispatch } from "react-redux";
-import { deleteItem } from "actions";
+import { deleteItem, refreshList } from "actions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -22,6 +22,7 @@ export const DeleteButton = ({ id }: IDeleteButtonComponent) => {
             activeOpacity={0.8}
             onPress={() => {
                 dispatch(deleteItem(id));
+                dispatch(refreshList());
             }}
         >
             <FontAwesomeIcon size={24} icon={faTrashAlt} color={PRIMARY} />

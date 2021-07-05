@@ -20,7 +20,6 @@ export const List = ({ status }: IListComponent) => {
     useEffect(() => {
         getData().then((e) => {
             setItems(e);
-            console.log(e);
         });
     }, [refresh]);
 

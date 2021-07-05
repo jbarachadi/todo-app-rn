@@ -1,34 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ListItem } from "components/molecules";
 
 import { todo } from "assets";
-import { getData } from "reducers/items";
+import { getData } from "services";
+import { initAdd } from "actions";
 
 interface IListComponent {
     status: string;
 }
 
 export const List = ({ status }: IListComponent) => {
-    const [items, setItems] = useState([]);
-
-    const refresh: boolean = useSelector((s: any) => s.refresh);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         getData().then((e) => {
-            setItems(e);
+            dispatch(initAdd(e));
         });
-    }, [refresh]);
+    }, []);
 
     const data: Array<todo> =
         status === "active"
-            ? items.filter((e: any) => e.status === false)
+            ? useSelector((s: any) =>
+                  s.items.filter((e: any) => e.status === false)
+              )
             : status === "completed"
-            ? items.filter((e: any) => e.status === true)
-            : items;
+            ? useSelector((s: any) =>
+                  s.items.filter((e: any) => e.status === true)
+              )
+            : useSelector((s: any) => s.items);
 
     return (
         <ScrollView style={{ flex: 1 }}>

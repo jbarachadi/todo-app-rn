@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 
 import { useDispatch } from "react-redux";
-import { addItem, inputText, refreshList } from "actions";
+import { addNewItem, inputText } from "actions";
 
 import { PRIMARY, WHITE } from "styles";
 
@@ -17,9 +17,8 @@ export const InputButton = ({ input }: IInputButtonComponent) => {
         <TouchableOpacity
             style={Styles.inputButton}
             onPress={() => {
-                dispatch(addItem(input));
+                dispatch(addNewItem(input));
                 dispatch(inputText(""));
-                dispatch(refreshList());
             }}
         >
             <Text style={Styles.inputButtonText}>Add</Text>

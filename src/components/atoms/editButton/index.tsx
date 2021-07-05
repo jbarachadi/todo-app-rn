@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { editInput, editItem, refreshList } from "actions";
+import { editItem } from "actions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPen, faSave } from "@fortawesome/free-solid-svg-icons";
@@ -28,11 +28,7 @@ export const EditButton = ({ id }: IEditButtonComponent) => {
         <TouchableOpacity
             style={Styles.editButton}
             activeOpacity={0.8}
-            onPress={() => {
-                dispatch(editItem(id));
-                if (edit) dispatch(editInput(id, "fff"));
-                dispatch(refreshList());
-            }}
+            onPress={() => dispatch(editItem(id))}
         >
             {edit ? (
                 <FontAwesomeIcon size={24} icon={faSave} color={PRIMARY} />

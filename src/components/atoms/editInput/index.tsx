@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { editInput, refreshList } from "actions";
+import { editInput } from "actions";
 
 import { todo } from "assets";
-import { getData } from "reducers/items";
 
 interface IInputFieldComponent {
     id: number;
@@ -13,16 +12,18 @@ interface IInputFieldComponent {
 }
 
 export const EditInput = ({ id, holder }: IInputFieldComponent) => {
-    const [text, setText] = useState(holder);
+    const text: string = useSelector(
+        (s: any) => s.items.find((e: todo) => e.id === id).text
+    );
+
+    const dispatch = useDispatch();
 
     return (
         <TextInput
             placeholder={holder}
             style={Styles.editInput}
             value={text}
-            onChangeText={(e) => {
-                setText(e);
-            }}
+            onChangeText={(e) => dispatch(editInput(id, e))}
         />
     );
 };

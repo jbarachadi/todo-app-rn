@@ -1,66 +1,49 @@
 import { todo } from "assets";
+import { storeData } from "services";
 
-import { getData, storeData } from "services";
-
-var initialState: todo[] = [];
-
-export const itemsReducer = (
-    items: Array<todo> = initialState,
-    action: any
-) => {
+export const itemsReducer = (items: Array<todo> = [], action: any) => {
     switch (action.type) {
-        case "ADD":
-            getData().then((e) => {
-                let newItem: todo = {
-                    id:
-                        e.length != undefined
-                            ? e.length - 1 < 0
-                                ? 0
-                                : e[e.length - 1].id + 1
-                            : 0,
-                    text: action.text,
-                    status: false,
-                };
+        case "INIT_ADD":
+            items = action.items;
 
-                items = [...e, newItem];
+            return items;
+        case "ADD_NEW":
+            let newItem: todo = {
+                id: items.length - 1 < 0 ? 0 : items[items.length - 1].id + 1,
+                text: action.text,
+                status: false,
+            };
 
-                storeData(items);
-            });
+            items = [...items, newItem];
+
+            storeData(items);
 
             return items;
         case "COMPLETED":
-            getData().then((e) => {
-                e.find((elem: todo) => elem.id === action.id).status = !e.find(
-                    (elem: todo) => elem.id === action.id
-                ).status;
+            items[
+                items.indexOf(items.find((e) => e.id === action.id)!)
+            ].status = !items.find((e) => e.id === action.id)?.status;
 
-                storeData(e);
-            });
+            storeData(items);
 
             return items;
         case "EDIT_INPUT":
-            getData().then((e) => {
-                e.find((elem: todo) => elem.id === action.id).text =
-                    action.text;
+            items[items.indexOf(items.find((e) => e.id === action.id)!)].text =
+                action.text;
 
-                storeData(e);
-            });
+            storeData(items);
 
             return items;
         case "DELETE":
-            getData().then((e) => {
-                e = e.filter((elem: todo) => elem.id !== action.id);
+            items = items.filter((e) => e.id !== action.id);
 
-                storeData(e);
-            });
+            storeData(items);
 
             return items;
         case "CLEAR":
-            getData().then((e) => {
-                e = e.filter((elem: todo) => elem.status === false);
+            items = items.filter((e) => e.status === false);
 
-                storeData(e);
-            });
+            storeData(items);
 
             return items;
         default:
